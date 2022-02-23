@@ -1,0 +1,22 @@
+.group {
+    position: relative;
+}
+
+.singUpBlock{
+    margin-top: 50px;
+}
+.loginButton{
+    width: 187px;
+    height: 36px;
+    font-size: 16px;
+    color: #ECECF9;
+    background-color: #007FFF;
+}
+
+.singUpBlockText{
+    color: gray;
+}
+.signIn{
+    text-decoration: none;
+    color: #21268F
+}
