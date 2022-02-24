@@ -2,24 +2,34 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../bll/Store";
 import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
-import {fetchPayments} from "../../../bll/Sagas/paymentsSaga";
+import {fetchPayments, removePayment} from "../../../bll/Sagas/paymentsSaga";
 import {PaymentResponseType} from "../../../dal/api";
 import {Payment} from "./Payment";
 import s from './mainPage.module.css'
+import mainStyle from "../../Components/ReusableStyle.module.css";
+import {STATUS_TYPE} from "../../Enums/StatusType";
+import {Preloader} from "../../Components/Preloader/Preloader";
+import {RequestStatusType} from "../../../bll/Reducers/AppReducer";
 
 export const PaymentTable = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.Auth.isLogged)
     const payments = useSelector<AppRootStateType, Array<PaymentResponseType>>(state => state.Payment.data)
+    const error = useSelector<AppRootStateType, string | null>(state => state.App.error)
+    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.App.status)
+
     useEffect(() => {
         dispatch(fetchPayments())
     }, [])
 
-    const editPayment = (id:string) =>{
-        navigate(`cards/${id}`)
+    const editPayment = (id: string) => navigate(`/detailed${id}`)
+
+    const deletePayment = (id:string) => {
+        dispatch(removePayment(id))
     }
+
     return (
+
         <div className={s.paymentsPage}>
             <table className={s.table}>
                 <thead>
@@ -33,12 +43,15 @@ export const PaymentTable = () => {
                 </thead>
                 <tbody>
                 {payments.map((el: PaymentResponseType) => (
+
                     <Payment key={el.id}
                              payment={el}
-                             editPayment = {editPayment}/>
+                             editPayment={editPayment}
+                             deletePayment={deletePayment}/>
                 ))}
                 </tbody>
             </table>
+
         </div>
     )
 }

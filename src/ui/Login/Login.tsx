@@ -29,18 +29,18 @@ export const Login = () => {
     const [inputType, setInputType] = useState<InputType>('password')
     const disabled = status === STATUS_TYPE.LOADING
 
-    useEffect(() => {
-        if (isLoggedIn) {
-            navigate(PATH.PAYMENTS_PAGE)
-        }
-    }, [isLoggedIn])
-
     const singInHandler = () => {
         dispatch(loginSaga(email, password))
     }
     const changeInputType = () => {
         setInputType(hidePassword(inputType))
     }
+    useEffect(()=> {
+        if (isLoggedIn) {
+            // debugger
+            navigate(PATH.PAYMENTS_PAGE)
+        }
+    },[isLoggedIn])
 
     return (
         <div className={mainStyle.formContainer}>

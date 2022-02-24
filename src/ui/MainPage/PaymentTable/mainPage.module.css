@@ -8,15 +8,14 @@
     border-collapse: collapse;
     text-align: center;
     margin: 100px 0;
-
-
+    background-color: white;
 }
 
 th, td {
     border-style: solid;
     border-width: 2px 2px 2px 2px;
-    border-color: rgb(79, 98, 108);
-    color: rgb(114, 149, 162);
+    border-color: #2D2E46;
+    color: #2D2E46;
     padding: 10px;
     width: 300px;
     max-width: 400px;
@@ -29,11 +28,21 @@ th {
 }
 
 .editButton{
-    width: 90px;
+    width: 50px;
     height: 20px;
     font-size: 16px;
     color: #ECECF9;
     background-color: #007FFF;
-    margin: 0;
+    margin: 0 2px;
+    border-radius: 5px;
+}
+
+.deleteButton{
+    width: 60px;
+    height: 20px;
+    font-size: 16px;
+    color: #ECECF9;
+    background-color: tomato;
+    margin: 0 0 0 10px;
     border-radius: 5px;
 }
