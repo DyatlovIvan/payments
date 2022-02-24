@@ -6,11 +6,18 @@ const instance = axios.create({
 
 export const authAPI ={
     login(email:string,password:string){
-      return instance.get('/auth',{params:{password}})
+      return instance.get('auth',{params:{password}})
           .then(res=>res.data)
     },
     register(email:string,password:string){
-        return instance.post('/auth',{email,password})
+        return instance.post('auth',{email,password})
+    }
+}
+
+export const paymentAPI = {
+    getPayments(){
+        return instance.get('payment')
+            .then(res=>res.data)
     }
 }
 
@@ -18,4 +25,12 @@ export type ResponseType = {
     email:string
     password:string
     id:string
+}
+
+export type PaymentResponseType = {
+    id:string
+    createdAt:string
+    name:string
+    sum:number
+    status:boolean
 }

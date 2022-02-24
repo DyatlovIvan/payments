@@ -41,7 +41,7 @@ export function* registerWorkerSaga(action: ReturnType<typeof registerSaga>) {
 export const registerSaga = (email: string, password: string) => ({type: 'REGISTER', email, password} as const)
 
 
-export function* tasksWatcherSaga() {
+export function* authWatcherSaga() {
     yield takeEvery('LOGIN', loginWorkerSaga)
     yield takeEvery('REGISTER', registerWorkerSaga)
 }

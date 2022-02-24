@@ -1,8 +1,6 @@
 export enum PATH {
-    MAIN_PAGE = '/main',
-    PAYMENT_PAGE = '/payment',
+    PAYMENTS_PAGE = 'payments',
+    PAYMENT_PAGE = 'payment/:id',
     LOGIN = '/',
-    REGISTER = '/register',
-    ERROR = '404',
-    WRONG_PAGE = '*'
+    REGISTER = 'register',
 }

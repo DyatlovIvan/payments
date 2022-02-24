@@ -31,7 +31,7 @@ export const Login = () => {
 
     useEffect(() => {
         if (isLoggedIn) {
-            navigate(PATH.MAIN_PAGE)
+            navigate(PATH.PAYMENTS_PAGE)
         }
     }, [isLoggedIn])
 
