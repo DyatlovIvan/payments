@@ -11,10 +11,9 @@ type ReusableInputPropsType = DefaultInputPropsType & { // и + ещё проп�
     inputType?: string | InputType
 }
 
-export const ReusableInput = ({
-                                  type, placeholder, disabled, onChange, onChangeText,
-                                  onKeyPress, onEnter, className,
-                                  spanClassName, value, inputType, ...props
+export const ReusableInput = ({placeholder, disabled, onChange,
+                                  onChangeText, onKeyPress, onEnter,
+                                  value, inputType
                               }: ReusableInputPropsType) => {
 
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {

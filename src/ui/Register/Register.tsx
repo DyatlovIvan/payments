@@ -8,7 +8,7 @@ import {ReusableButton} from "../Components/ReusableButton/ReusableButton";
 import {INPUT_TYPE} from "../Enums/InputType";
 import {STATUS_TYPE} from "../Enums/StatusType";
 import {PATH} from "../Enums/Routes";
-import {registerSaga} from "../../bll/Sagas/authSaga";
+import {registerSagaRequest} from "../../bll/Sagas/authSaga";
 import mainStyle from '../Components/ReusableStyle.module.css'
 import s from './Register.module.css'
 import {hidePassword} from "../Utils/HidePassword";
@@ -37,9 +37,9 @@ export const Register = () => {
 
     const onClickRegisterHandler = () => {
         if (password === repeatPassword && password !== '') {
-            dispatch(registerSaga(email, password))
+            dispatch(registerSagaRequest(email, password))
         } else {
-            dispatch(setAppError('Passwords do not match'))
+            dispatch(setAppError("Passwords do not match"))
         }
     }
     if (isRegister) {
@@ -79,7 +79,7 @@ export const Register = () => {
                     disabled={disabled}
                     onChange={onChangeRepeatPasswordInput}
                     name={INPUT_TYPE.PASSWORD}
-                    placeholder={'confirm password'}
+                    placeholder={"confirm password"}
                     value={repeatPassword}
                 />
                 <span
@@ -90,10 +90,10 @@ export const Register = () => {
             </div>
             <div className={s.buttonGroup}>
                 <ReusableButton disabled={disabled} className={s.cancel}
-                                type={'button'} value={'back'}
+                                type={"button"} value={"back"}
                                 onClick={onClickBackHandler}/>
                 <ReusableButton disabled={disabled} className={s.register}
-                                type={'button'} value={'register'}
+                                type={"button"} value={"register"}
                                 onClick={onClickRegisterHandler}/>
             </div>
         </div>

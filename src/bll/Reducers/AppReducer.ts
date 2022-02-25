@@ -1,7 +1,5 @@
 import {STATUS_TYPE} from "../../ui/Enums/StatusType";
 
-export type RequestStatusType = STATUS_TYPE.IDLE | STATUS_TYPE.LOADING | STATUS_TYPE.SUCCEEDED | STATUS_TYPE.FAILED
-
 const initialState: InitialStateType = {
     error: null,
     status: STATUS_TYPE.FAILED,
@@ -32,6 +30,9 @@ export const setAppStatus = (status: RequestStatusType) => ({
 export const setIsInitialized = ()=> ({
     type :"APP/SET_IS_INITIALIZED"
 }) as const
+
+
+export type RequestStatusType = STATUS_TYPE.IDLE | STATUS_TYPE.LOADING | STATUS_TYPE.SUCCEEDED | STATUS_TYPE.FAILED
 
 type InitialStateType = {
     error: string | null

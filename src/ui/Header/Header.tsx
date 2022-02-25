@@ -17,13 +17,11 @@ export const Header = () => {
         dispatch(setIsLogged(false))
         dispatch(setAppStatus(STATUS_TYPE.SUCCEEDED))
     }
-    useEffect(()=>{
-        if(!isLoggedIn){
+    useEffect(() => {
+        if (!isLoggedIn) {
             navigate(PATH.LOGIN)
         }
-    },[isLoggedIn])
-
-
+    }, [isLoggedIn])
     return (
         <header className={s.header}>
             <span className={s.title}>Payments</span>

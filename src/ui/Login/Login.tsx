@@ -11,7 +11,7 @@ import {INPUT_TYPE} from "../Enums/InputType";
 import {ReusableButton} from "../Components/ReusableButton/ReusableButton";
 import {NavLink} from "react-router-dom";
 import {hidePassword} from "../Utils/HidePassword";
-import {loginSaga} from "../../bll/Sagas/authSaga";
+import {loginSagaRequest} from "../../bll/Sagas/authSaga";
 import {PATH} from "../Enums/Routes";
 import {Preloader} from "../Components/Preloader/Preloader";
 
@@ -26,11 +26,11 @@ export const Login = () => {
 
     const [email, setEmail] = useState<string>('dyatlovivan92@gmail.com')
     const [password, setPassword] = useState<string>('12345678')
-    const [inputType, setInputType] = useState<InputType>('password')
+    const [inputType, setInputType] = useState<InputType>(INPUT_TYPE.PASSWORD)
     const disabled = status === STATUS_TYPE.LOADING
 
     const singInHandler = () => {
-        dispatch(loginSaga(email, password))
+        dispatch(loginSagaRequest(email, password))
     }
     const changeInputType = () => {
         setInputType(hidePassword(inputType))
@@ -59,11 +59,11 @@ export const Login = () => {
                     </span>
             </div>
             <ReusableButton disabled={disabled} className={s.loginButton}
-                            onClick={singInHandler} value={'Login'}/>
+                            onClick={singInHandler} value={"Login"}/>
                 <div className={s.singUpBlockText}>
                     Don't have an account?
                 </div>
-                <NavLink className={s.signIn} to={`/register`}>Sing Up</NavLink>
+                <NavLink className={s.signIn} to={"/register"}>Sing Up</NavLink>
         </div>
     )
 }

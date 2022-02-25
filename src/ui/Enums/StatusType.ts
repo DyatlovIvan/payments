@@ -3,5 +3,4 @@ export enum STATUS_TYPE {
     LOADING = 'loading',
     SUCCEEDED = 'succeeded',
     FAILED = 'failed'
-
 }

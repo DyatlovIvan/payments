@@ -11,48 +11,33 @@ import {STATUS_TYPE} from "../../../Enums/StatusType";
 import {Preloader} from "../../../Components/Preloader/Preloader";
 import {dateHandler} from "../../../Utils/dateHandler";
 
-type DetailedDataFormType = {
-    detailedPayment: PaymentType
-    savePayment: (detailedPayment: PaymentType) => void
-    goToEditMode: () => void
-}
-
-type PaymentType = {
-    id: string
-    createdAt: Date
-    name: string
-    sum: number
-    status: boolean
-}
-
 export const DetailedDataForm = ({detailedPayment, savePayment, goToEditMode}: DetailedDataFormType) => {
+    const createdAt = dateHandler(detailedPayment.createdAt,"hyphen")
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.App.status)
     const formik = useFormik({
         initialValues: {
             id: detailedPayment.id,
             name: detailedPayment.name,
             sum: detailedPayment.sum,
-            createdAt: new Date(detailedPayment.createdAt),
+            createdAt:createdAt,
             status: detailedPayment.status
         },
-        onSubmit: (values) => savePayment(values as PaymentType)
+        onSubmit: (values) => savePayment(values as PaymentResponseType)
     })
-    debugger
 
     const OnChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
         formik.handleChange(e)
     }
     if(status === STATUS_TYPE.LOADING){
-        debugger
         return(<Preloader/>)
     }
     return (
         <form onSubmit={formik.handleSubmit} className={mainStyle.formContainer}>
             <div className={s.buttonGroup}>
                 <ReusableButton className={s.button} onClick={goToEditMode}
-                                type={'button'} value={'Back'}/>
+                                type={"button"} value={"Back"}/>
                 <ReusableButton className={s.button}
-                                type={'submit'} value={'Save'}/>
+                                type={"submit"} value={"Save"}/>
             </div>
             <div>
                 <b>Name</b>:
@@ -63,7 +48,6 @@ export const DetailedDataForm = ({detailedPayment, savePayment, goToEditMode}: D
                         type="text"
                         onChange={OnChangeHandler}
                         onBlur={formik.handleBlur}
-                        //className={style.infoString}
                         value={formik.values.name}/>
                 </div>
 
@@ -75,20 +59,18 @@ export const DetailedDataForm = ({detailedPayment, savePayment, goToEditMode}: D
                         type="number"
                         onChange={OnChangeHandler}
                         onBlur={formik.handleBlur}
-                        //className={style.infoString}
                         value={formik.values.sum}/>
                 </div>
 
                 <b>Date</b>:
                 <div>
                     <input
-                        id="date"
-                        name="date"
+                        id="createdAt"
+                        name="createdAt"
                         type="date"
                         onChange={OnChangeHandler}
                         onBlur={formik.handleBlur}
-                        //className={style.infoString}
-                        value={formik.values.createdAt}/>
+                        defaultValue={formik.values.createdAt}/>
                 </div>
 
                 <b>Status</b>:
@@ -97,11 +79,14 @@ export const DetailedDataForm = ({detailedPayment, savePayment, goToEditMode}: D
                     name="status"
                     type="checkbox"
                     onChange={formik.handleChange}
-                    //className={style.infoString}
                     checked={formik.values.status}/>
-
             </div>
-
         </form>
     )
+}
+
+type DetailedDataFormType = {
+    detailedPayment: PaymentResponseType
+    savePayment: (detailedPayment: PaymentResponseType) => void
+    goToEditMode: () => void
 }

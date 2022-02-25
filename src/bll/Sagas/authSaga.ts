@@ -6,7 +6,7 @@ import {handleServerNetworkErrorSaga} from "../../ui/Utils/ErrorUtils";
 import {setIsLogged, setIsRegister} from "../Reducers/authReducer";
 
 
-export function* loginWorkerSaga(action: ReturnType<typeof loginSaga>) {
+export function* loginWorkerSaga(action: ReturnType<typeof loginSagaRequest>) {
     yield put(setAppError(null))
     yield put(setAppStatus(STATUS_TYPE.LOADING))
     try {
@@ -22,10 +22,10 @@ export function* loginWorkerSaga(action: ReturnType<typeof loginSaga>) {
         }
     }
 }
-export const loginSaga = (email: string, password: string) => ({type: 'LOGIN', email, password} as const)
+export const loginSagaRequest = (email: string, password: string) => ({type: 'LOGIN', email, password} as const)
 
 
-export function* registerWorkerSaga(action: ReturnType<typeof registerSaga>) {
+export function* registerWorkerSaga(action: ReturnType<typeof registerSagaRequest>) {
     yield put(setAppError(null))
     yield put(setAppStatus(STATUS_TYPE.LOADING))
     try {
@@ -38,7 +38,7 @@ export function* registerWorkerSaga(action: ReturnType<typeof registerSaga>) {
         }
     }
 }
-export const registerSaga = (email: string, password: string) => ({type: 'REGISTER', email, password} as const)
+export const registerSagaRequest = (email: string, password: string) => ({type: 'REGISTER', email, password} as const)
 
 
 export function* authWatcherSaga() {

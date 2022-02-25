@@ -3,9 +3,9 @@ import {setAppError, setAppStatus} from "../Reducers/AppReducer";
 import {STATUS_TYPE} from "../../ui/Enums/StatusType";
 import {paymentAPI, PaymentResponseType} from "../../dal/api";
 import {handleServerNetworkErrorSaga} from "../../ui/Utils/ErrorUtils";
-import {deletePayment, setPayments, UpdatePayment} from "../Reducers/paymentReducer";
+import {deletePayment, setPayments, updatePayment} from "../Reducers/paymentReducer";
 
-export function* fetchPaymentsWorkerSaga(action: ReturnType<typeof fetchPayments>) {
+export function* fetchPaymentsWorkerSaga() {
     yield put(setAppError(null))
     yield put(setAppStatus(STATUS_TYPE.LOADING))
     try {
@@ -23,10 +23,9 @@ export function* fetchPaymentsWorkerSaga(action: ReturnType<typeof fetchPayments
     }
 }
 
-export const fetchPayments = () => ({type: 'PAYMENT/FETCH_PAYMENTS'} as const)
+export const fetchPaymentsRequest = () => ({type: 'PAYMENT/FETCH_PAYMENTS'} as const)
 
-
-export function* removePaymentWorkerSaga(action: ReturnType<typeof removePayment>) {
+export function* removePaymentWorkerSaga(action: ReturnType<typeof removePaymentRequest>) {
     yield put(setAppError(null))
     yield put(setAppStatus(STATUS_TYPE.LOADING))
     try {
@@ -39,15 +38,14 @@ export function* removePaymentWorkerSaga(action: ReturnType<typeof removePayment
         }
     }
 }
-export const removePayment = (id: string) => ({type: 'PAYMENT/REMOVE_PAYMENT', id} as const)
-
+export const removePaymentRequest = (id: string) => ({type: 'PAYMENT/REMOVE_PAYMENT', id} as const)
 
 export function* updatePaymentWorkerSaga(action: ReturnType<typeof updatePayment>) {
     yield put(setAppError(null))
     yield put(setAppStatus(STATUS_TYPE.LOADING))
     try {
-        const data: PaymentResponseType = yield call(paymentAPI.updatePayment,action.payment)
-        yield put(UpdatePayment(data))
+        const data: PaymentResponseType = yield call(paymentAPI.updatePayment, action.payment)
+        yield (updatePayment(data))
         yield put(setAppStatus(STATUS_TYPE.SUCCEEDED))
     } catch (error) {
         if (error instanceof Error) {
@@ -55,13 +53,10 @@ export function* updatePaymentWorkerSaga(action: ReturnType<typeof updatePayment
         }
     }
 }
-export const updatePayment = (payment:PaymentResponseType) => ({type: 'PAYMENT/UPDATE_PAYMENT',payment} as const)
-
-
+export const updatePaymentRequest = (payment: PaymentResponseType) => ({type: 'PAYMENT/UPDATE_PAYMENT', payment} as const)
 
 export function* paymentWatcherSaga() {
-    yield takeEvery('PAYMENT/FETCH_PAYMENTS', fetchPaymentsWorkerSaga)
-    yield takeEvery('PAYMENT/REMOVE_PAYMENT', removePaymentWorkerSaga)
-    yield takeEvery('PAYMENT/UPDATE_PAYMENT', updatePaymentWorkerSaga)
-
+    yield takeEvery("PAYMENT/FETCH_PAYMENTS", fetchPaymentsWorkerSaga)
+    yield takeEvery("PAYMENT/REMOVE_PAYMENT", removePaymentWorkerSaga)
+    yield takeEvery("PAYMENT/UPDATE_PAYMENT", updatePaymentWorkerSaga)
 }
