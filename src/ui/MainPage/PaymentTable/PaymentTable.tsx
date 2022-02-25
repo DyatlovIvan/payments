@@ -6,10 +6,9 @@ import {fetchPayments, removePayment} from "../../../bll/Sagas/paymentsSaga";
 import {PaymentResponseType} from "../../../dal/api";
 import {Payment} from "./Payment";
 import s from './mainPage.module.css'
-import mainStyle from "../../Components/ReusableStyle.module.css";
 import {STATUS_TYPE} from "../../Enums/StatusType";
-import {Preloader} from "../../Components/Preloader/Preloader";
 import {RequestStatusType} from "../../../bll/Reducers/AppReducer";
+import {Preloader} from "../../Components/Preloader/Preloader";
 
 export const PaymentTable = () => {
     const dispatch = useDispatch()
@@ -25,9 +24,12 @@ export const PaymentTable = () => {
     const editPayment = (id: string) => navigate(`/detailed${id}`)
 
     const deletePayment = (id:string) => {
+        debugger
         dispatch(removePayment(id))
     }
-
+    if(status === STATUS_TYPE.LOADING){
+        return(<Preloader/>)
+    }
     return (
 
         <div className={s.paymentsPage}>

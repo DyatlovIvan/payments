@@ -19,7 +19,6 @@ return(
     <Routes>
         <Route path={PATH.LOGIN} element = {<Login/>}/>
         <Route path={PATH.PAYMENTS_PAGE} element = {<PaymentTable/>}/>
-        {/*<Route path={PATH.DETAILED_PAGE} element = {<div>Hello</div>}/>*/}
         <Route path={PATH.DETAILED_PAGE} element = {<DetailedPage/>}/>
         <Route path={PATH.REGISTER} element = {<Register/>}/>
     </Routes>

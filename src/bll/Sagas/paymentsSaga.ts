@@ -3,7 +3,7 @@ import {setAppError, setAppStatus} from "../Reducers/AppReducer";
 import {STATUS_TYPE} from "../../ui/Enums/StatusType";
 import {paymentAPI, PaymentResponseType} from "../../dal/api";
 import {handleServerNetworkErrorSaga} from "../../ui/Utils/ErrorUtils";
-import {deletePayment, setPayments} from "../Reducers/paymentReducer";
+import {deletePayment, setPayments, UpdatePayment} from "../Reducers/paymentReducer";
 
 export function* fetchPaymentsWorkerSaga(action: ReturnType<typeof fetchPayments>) {
     yield put(setAppError(null))
@@ -31,7 +31,6 @@ export function* removePaymentWorkerSaga(action: ReturnType<typeof removePayment
     yield put(setAppStatus(STATUS_TYPE.LOADING))
     try {
         yield call(paymentAPI.removePayment, action.id)
-        debugger
         yield put(deletePayment(action.id))
         yield put(setAppStatus(STATUS_TYPE.SUCCEEDED))
     } catch (error) {
@@ -43,8 +42,26 @@ export function* removePaymentWorkerSaga(action: ReturnType<typeof removePayment
 export const removePayment = (id: string) => ({type: 'PAYMENT/REMOVE_PAYMENT', id} as const)
 
 
+export function* updatePaymentWorkerSaga(action: ReturnType<typeof updatePayment>) {
+    yield put(setAppError(null))
+    yield put(setAppStatus(STATUS_TYPE.LOADING))
+    try {
+        const data: PaymentResponseType = yield call(paymentAPI.updatePayment,action.payment)
+        yield put(UpdatePayment(data))
+        yield put(setAppStatus(STATUS_TYPE.SUCCEEDED))
+    } catch (error) {
+        if (error instanceof Error) {
+            yield handleServerNetworkErrorSaga(error.message)
+        }
+    }
+}
+export const updatePayment = (payment:PaymentResponseType) => ({type: 'PAYMENT/UPDATE_PAYMENT',payment} as const)
+
+
+
 export function* paymentWatcherSaga() {
     yield takeEvery('PAYMENT/FETCH_PAYMENTS', fetchPaymentsWorkerSaga)
     yield takeEvery('PAYMENT/REMOVE_PAYMENT', removePaymentWorkerSaga)
+    yield takeEvery('PAYMENT/UPDATE_PAYMENT', updatePaymentWorkerSaga)
 
 }

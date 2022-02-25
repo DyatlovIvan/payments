@@ -29,23 +29,11 @@ export const Register = () => {
     const error = useSelector<AppRootStateType, null | string>(state => state.App.error)
     const disabled = status === STATUS_TYPE.LOADING
 
-    const onChangeEmailInput = (e: ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.currentTarget.value)
-    }
-    const onChangePasswordInput = (e: ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.currentTarget.value)
-    }
-    const onChangeRepeatPasswordInput = (e: ChangeEvent<HTMLInputElement>) => {
-        setRepeatPassword(e.currentTarget.value)
-    }
-
-    const changeInputType = () => {
-        setInputType(hidePassword(inputType))
-    }
-
-    const onClickBackHandler = () => {
-        navigate(PATH.LOGIN)
-    }
+    const onChangeEmailInput = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.currentTarget.value)
+    const onChangePasswordInput = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.currentTarget.value)
+    const onChangeRepeatPasswordInput = (e: ChangeEvent<HTMLInputElement>) => setRepeatPassword(e.currentTarget.value)
+    const changeInputType = () => setInputType(hidePassword(inputType))
+    const onClickBackHandler = () => navigate(PATH.LOGIN)
 
     const onClickRegisterHandler = () => {
         if (password === repeatPassword && password !== '') {
@@ -58,7 +46,6 @@ export const Register = () => {
         navigate(PATH.LOGIN)
     }
     return (
-
         <div className={mainStyle.formContainer}>
             <h1>Sign up</h1>
             {status === STATUS_TYPE.LOADING && <Preloader/>}
