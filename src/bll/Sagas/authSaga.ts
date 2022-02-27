@@ -10,11 +10,12 @@ export function* loginWorkerSaga(action: ReturnType<typeof loginSagaRequest>) {
     yield put(setAppError(null))
     yield put(setAppStatus(STATUS_TYPE.LOADING))
     try {
-        const data: ResponseType = yield call(authAPI.login, action.email, action.password)
-        if (data) {
+        const data: ResponseType[] = yield call(authAPI.login, action.email, action.password)
+        debugger
+        if (data.length) {
             yield put(setIsLogged(true))
         } else {
-            yield handleServerNetworkErrorSaga('No such user.Please complete the registration')
+            yield handleServerNetworkErrorSaga('No such user. Please complete the registration')
         }
     } catch (error) {
         if (error instanceof Error) {

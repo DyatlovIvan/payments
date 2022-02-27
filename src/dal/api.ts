@@ -6,7 +6,6 @@ const instance = axios.create({
 
 export const authAPI = {
     login(email: string, password: string) {
-
         return instance.get<ResponseType[]>('auth', {params: {password, email}})
             .then(res => res.data)
     },
@@ -25,12 +24,12 @@ export const paymentAPI = {
     },
     updatePayment(payment: PaymentType) {
         return instance.put(`payment/${payment.id}`, {
-                name: payment.name,
-                sum: payment.sum,
-                createdAt: payment.createdAt,
-                status: payment.status
-            })
-            .then(res=>res.data[0])
+            name: payment.name,
+            sum: payment.sum,
+            createdAt: payment.createdAt,
+            status: payment.status
+        })
+            .then(res => res.data[0])
     }
 }
 

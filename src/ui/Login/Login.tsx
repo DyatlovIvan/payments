@@ -25,13 +25,15 @@ export const Login = React.memo(() => {
         const error = useSelector<AppRootStateType, string | null>(selectError)
         const status = useSelector<AppRootStateType, RequestStatusType>(selectStatus)
 
-        const [email, setEmail] = useState<string>('dyatlovivan92@gmail.com')
-        const [password, setPassword] = useState<string>('12345678')
+        const [email, setEmail] = useState<string>('')
+        const [password, setPassword] = useState<string>('')
         const [inputType, setInputType] = useState<InputType>(INPUT_TYPE.PASSWORD)
         const disabled = status === STATUS_TYPE.LOADING
 
         const singInHandler = useCallback(() => {
-            dispatch(loginSagaRequest(email, password))
+            if (email && password) {
+                dispatch(loginSagaRequest(email, password))
+            }
         }, [email, password])
 
         const changeInputType = useCallback(() => {
