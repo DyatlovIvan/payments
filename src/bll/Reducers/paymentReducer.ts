@@ -1,7 +1,7 @@
-import {PaymentResponseType} from "../../dal/api";
+import {PaymentType} from "../../dal/api";
 
 const initialState = {
-    data: [] as Array<PaymentResponseType>
+    data: [] as Array<PaymentType>
 }
 
 export const PaymentReducer = (state: InitialStateType = initialState, action: PaymentMainType):InitialStateType => {
@@ -25,12 +25,12 @@ export const PaymentReducer = (state: InitialStateType = initialState, action: P
     }
 }
 
-export const setPayments = (payments: Array<PaymentResponseType>) => ({type: 'PAYMENT/SET_PAYMENTS', payments} as const)
+export const setPayments = (payments: Array<PaymentType>) => ({type: 'PAYMENT/SET_PAYMENTS', payments} as const)
 export const deletePayment = (id: string) => ({type: 'PAYMENT/DELETE_PAYMENT', id} as const)
-export const updatePayment = (payment: PaymentResponseType) => ({type: 'PAYMENT/UPDATE_PAYMENT', payment} as const)
+export const updatePayment = (payment: PaymentType) => ({type: 'PAYMENT/UPDATE_PAYMENT', payment} as const)
 
 type InitialStateType = {
-    data: Array<PaymentResponseType>
+    data: Array<PaymentType>
 }
 
 export type PaymentMainType =

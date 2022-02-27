@@ -1,7 +1,7 @@
 import {call, put, takeEvery} from "redux-saga/effects";
 import {setAppError, setAppStatus} from "../Reducers/AppReducer";
 import {STATUS_TYPE} from "../../ui/Enums/StatusType";
-import {paymentAPI, PaymentResponseType} from "../../dal/api";
+import {paymentAPI, PaymentType} from "../../dal/api";
 import {handleServerNetworkErrorSaga} from "../../ui/Utils/ErrorUtils";
 import {deletePayment, setPayments, updatePayment} from "../Reducers/paymentReducer";
 
@@ -9,7 +9,7 @@ export function* fetchPaymentsWorkerSaga() {
     yield put(setAppError(null))
     yield put(setAppStatus(STATUS_TYPE.LOADING))
     try {
-        const data: PaymentResponseType[] = yield call(paymentAPI.getPayments)
+        const data: PaymentType[] = yield call(paymentAPI.getPayments)
         if (data.length !== 0) {
             yield put(setPayments(data))
             yield put(setAppStatus(STATUS_TYPE.SUCCEEDED))
@@ -44,7 +44,7 @@ export function* updatePaymentWorkerSaga(action: ReturnType<typeof updatePayment
     yield put(setAppError(null))
     yield put(setAppStatus(STATUS_TYPE.LOADING))
     try {
-        const data: PaymentResponseType = yield call(paymentAPI.updatePayment, action.payment)
+        const data: PaymentType = yield call(paymentAPI.updatePayment, action.payment)
         yield (updatePayment(data))
         yield put(setAppStatus(STATUS_TYPE.SUCCEEDED))
     } catch (error) {
@@ -53,7 +53,7 @@ export function* updatePaymentWorkerSaga(action: ReturnType<typeof updatePayment
         }
     }
 }
-export const updatePaymentRequest = (payment: PaymentResponseType) => ({type: 'PAYMENT/UPDATE_PAYMENT', payment} as const)
+export const updatePaymentRequest = (payment: PaymentType) => ({type: 'PAYMENT/UPDATE_PAYMENT', payment} as const)
 
 export function* paymentWatcherSaga() {
     yield takeEvery("PAYMENT/FETCH_PAYMENTS", fetchPaymentsWorkerSaga)

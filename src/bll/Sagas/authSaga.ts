@@ -10,10 +10,10 @@ export function* loginWorkerSaga(action: ReturnType<typeof loginSagaRequest>) {
     yield put(setAppError(null))
     yield put(setAppStatus(STATUS_TYPE.LOADING))
     try {
-        const res:ResponseType[] = yield call(authAPI.login, action.email, action.password)
-        if(res.length!==0){
+        const data: ResponseType = yield call(authAPI.login, action.email, action.password)
+        if (data) {
             yield put(setIsLogged(true))
-        }else{
+        } else {
             yield handleServerNetworkErrorSaga('No such user.Please complete the registration')
         }
     } catch (error) {
@@ -22,6 +22,7 @@ export function* loginWorkerSaga(action: ReturnType<typeof loginSagaRequest>) {
         }
     }
 }
+
 export const loginSagaRequest = (email: string, password: string) => ({type: 'LOGIN', email, password} as const)
 
 
@@ -38,6 +39,7 @@ export function* registerWorkerSaga(action: ReturnType<typeof registerSagaReques
         }
     }
 }
+
 export const registerSagaRequest = (email: string, password: string) => ({type: 'REGISTER', email, password} as const)
 
 

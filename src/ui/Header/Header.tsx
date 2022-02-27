@@ -4,10 +4,10 @@ import {setIsLogged} from "../../bll/Reducers/authReducer";
 import s from './Header.module.css'
 import {ReusableButton} from "../Components/ReusableButton/ReusableButton";
 import {useNavigate} from "react-router-dom";
-import {PATH} from "../Enums/Routes";
 import {useEffect} from "react";
 import {setAppStatus} from "../../bll/Reducers/AppReducer";
 import {STATUS_TYPE} from "../Enums/StatusType";
+import {PATH} from "../Enums/Routes";
 
 export const Header = () => {
     const navigate = useNavigate()
@@ -25,8 +25,14 @@ export const Header = () => {
     return (
         <header className={s.header}>
             <span className={s.title}>Payments</span>
-            {isLoggedIn && <ReusableButton className={s.logout} onClick={logoutHandler}
-                                           value={'Logout'}/>}
+            {isLoggedIn && (
+                <ReusableButton
+                    className={s.logout}
+                    onClick={logoutHandler}
+                    value={'Logout'}
+
+                />
+            )}
         </header>
     )
 }
